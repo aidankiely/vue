@@ -1,60 +1,91 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-<link rel="stylesheet" href="style.css">
-    <title>Store</title>
-    <link rel="icon" type="image/x-icon" href="fav.jpg">
-
+    <meta charset="UTF-8" />
+    <title>Baseball Caps</title>
+    <!-- Import Styles -->
+    <link rel="stylesheet" href="./assets/styles.css" />
+    <!-- Import Vue.js -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
   </head>
-<body>
+  <body>
+    <div id="app">
+      <div class="nav-bar"></div>
+      <div class="cart">Cart({{ cart }})</div>
+      <div class="product-display">
+        <div class="product-container">
+          <div class="product-image" :class="{ 'out-of-stock-img': !inStock }">
+            <img :src="image" alt="Socks">
+          </div>
+          <div class="product-info">
+            <h1>{{ title }}</h1>
+
+            <p v-if="inventory > 10">In Stock</p>
+            <p v-else-if="inventory <= 10 && inventory > 0"> SALE </p>
+            <p v-else>Out Of Stock</p>
+            <!-- Another way of conditional showing-->
+            <!--
+              <p v-show="inStock">In Stock</p>
+            -->
+
+            <p v-show="onSale">On Sale!</p>
+            <p>{{ description }}</p>
 
 
-  <div class="topnav">
-    <a class="active" href="index.html">SHOP</a>
-   
+            <ul>
+              <li v-for="detail in details">{{ detail }}</li>
+            </ul>
+
+            <div v-for="variant in variants" :key="variant.id" @mouseover="updateImage(variant.image)" class="color-circle" :style="{backgroundColor: variant.color}">{{}}</div>
+          
+          <ul>
+            <li v-for="size in sizes">{{ size }}</li>
+          </ul>
+
+          <button class="button" :class="{ disabledButton: !inStock }" :disabled="!inStock" v-on:click="addToCart">Add to Cart</button>
+
+
   
- 
-  </div>
-  
-
-  </div>   
-  <div>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-12">
-          <h1  style="color:rgb(255, 255, 255);"><b>product</b></h1>
+          </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-md-4">
-          <p style="color:rgb(255, 255, 255);">TEXT TEXT TEXT TEXT TETX</p>
-          <a href="about.html" type="button" class="btn btn-outline-primary">Reviews</a>
-          <a href="https://instagram.com/ronankiely_?igshid=OGQ5ZDc2ODk2ZA=="> <img src="Social.png" alt="SocialMedia" width="100" height="27">
-        </div>
-        <div class="col-md-8">
-          <img src="rkb.png" alt="IMAGE" width="770" height="950">
-    
-
-        </div>
-      </div>
-     
-
-  ______
-
-</body>
-
-
     </div>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <h1>Leave a Review</h1>
+    <form id="review-form">
+      <div>
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div>
+        <label for="rating">Rating:</label>
+        <select id="rating" name="rating" required>
+          <option value="">Select a rating</option>
+          <option value="1">1 Star</option>
+          <option value="2">2 Stars</option>
+          <option value="3">3 Stars</option>
+          <option value="4">4 Stars</option>
+          <option value="5">5 Stars</option>
+        </select>
+      </div>
+      <div>
+        <label for="comment">Review Comment:</label>
+        <textarea id="comment" name="comment" required></textarea>
+      </div>
+      <button type="submit">Submit Review</button>
+    </form>
+
+    <!-- Import Js -->
+    <script src="./main.js"></script>
+
+    <!--Mount App-->
+    <script>
+      const mountedApp = app.mount('#app')
+    </script>
   </body>
+</html>
+    <!--Mount App-->
+    <script>
+      const mountedApp = app.mount('#app')
+    </script>
+  </body>
+</html>
